@@ -1,0 +1,46 @@
+n = int(input())
+max_del_17_even = [0, 0] # [0] - максимальное число, [1] - предыдущее максимальное
+max_del_17_odd = [0, 0] # аналогично с 1
+max_even = 0
+max_odd = 0
+max_sum, f , sec = 0, 0, 0
+
+#Функция, которая меняет переменные max_sum, f, sec на нужные значения
+def func(num1, num2):
+  global max_sum, f, sec
+  max_sum = num1 + num2
+  f = num1
+  sec = num2
+  return
+
+for i in range(n):
+  number = int(input())
+  if number % 17 == 0:
+    if number % 2 == 0 and number > max_del_17_even[0]:
+      max_del_17_even[1] = max_del_17_even[0]
+      max_del_17_even[0] = number
+    elif number % 2 == 0 and number > max_del_17_even[1]:
+      max_del_17_even[1] = number
+    elif number % 2 == 1 and number > max_del_17_odd[0]:
+      max_del_17_odd[1] = max_del_17_odd[0]
+      max_del_17_odd[0] = number
+    elif number % 2 == 1 and number > max_del_17_odd[1]:
+      max_del_17_odd[1] = number
+  else:
+    if number % 2 == 0 and number > max_even:
+      max_even = number
+    elif number % 2 == 1 and number > max_odd:
+      max_odd = number
+
+if max_del_17_even[0] * max_del_17_even[1] != 0 and max_del_17_even[0] + max_del_17_even[1] > max_sum:
+  func(max_del_17_even[0], max_del_17_even[1])
+if max_del_17_odd[0] * max_del_17_odd[1] != 0 and max_del_17_odd[0] + max_del_17_odd[1] > max_sum:
+  func(max_del_17_odd[0], max_del_17_odd[1])
+if max_del_17_even[0] * max_even != 0 and max_del_17_even[0] + max_even > max_sum:
+  func(max_del_17_even[0], max_even)
+if max_del_17_odd[0] * max_odd != 0 and max_del_17_odd[0] + max_odd > max_sum:
+  func(max_del_17_odd[0], max_odd)
+if max_sum > 0:
+  print(f, sec)
+else:
+  print('00')
